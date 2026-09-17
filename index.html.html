@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eme Ekwo — Learning Design Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F7F4;
+  --ink:#14201D;
+  --slate:#5C6B66;
+  --rule:#D9DDD6;
+  --teal:#14625C;
+  --teal-soft:#E4EEEC;
+  --mark:#EFE06A;
+  --fill:#0F5A70;
+  --fill-bg:#E3F0F4;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#111A18;
+    --ink:#E8EDEA;
+    --slate:#9AAAA5;
+    --rule:#2A3A36;
+    --teal:#6FC5B8;
+    --teal-soft:#18302D;
+    --mark:#7C7020;
+    --fill:#7FC9DD;
+    --fill-bg:#16323B;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111A18;
+  --ink:#E8EDEA;
+  --slate:#9AAAA5;
+  --rule:#2A3A36;
+  --teal:#6FC5B8;
+  --teal-soft:#18302D;
+  --mark:#7C7020;
+  --fill:#7FC9DD;
+  --fill-bg:#16323B;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  font-size:17px;
+  line-height:1.62;
+  font-weight:400;
+}
+img{max-width:100%}
+
+h1,h2,h3,h4{font-family:"Newsreader",Georgia,"Times New Roman",serif;font-weight:500;line-height:1.18;margin:0}
+h1{font-size:clamp(2.3rem,6vw,3.6rem);letter-spacing:-.015em}
+h2{font-size:clamp(1.7rem,3.6vw,2.3rem);letter-spacing:-.01em}
+h3{font-size:1.28rem;font-weight:600}
+h4{font-size:1.05rem;font-weight:600;font-family:"Public Sans",sans-serif;letter-spacing:.005em}
+p{margin:0 0 1em}
+a{color:var(--teal);text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.prose{max-width:68ch}
+
+/* ---- masthead ---- */
+.masthead{padding:64px 0 40px;border-bottom:1px solid var(--rule)}
+.name-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px;margin-bottom:18px}
+.role{font-size:1rem;color:var(--slate);font-style:italic;font-family:"Newsreader",serif;font-size:1.15rem}
+.contact{font-size:.93rem;color:var(--slate);line-height:2;border-top:1px solid var(--rule);padding-top:16px;margin-top:24px;max-width:68ch}
+.contact a{color:var(--ink)}
+.lede{font-family:"Newsreader",serif;font-size:1.32rem;line-height:1.5;max-width:60ch;margin-top:18px}
+
+/* ---- layout ---- */
+.body-grid{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:1000px){
+  .body-grid{grid-template-columns:232px 1fr;gap:56px;align-items:start}
+  .toc{position:sticky;top:0;padding-top:56px;max-height:100vh;overflow-y:auto}
+}
+.toc{font-size:.92rem;padding-bottom:24px}
+.toc h4{margin-bottom:12px;font-size:.82rem;letter-spacing:.06em;color:var(--slate);font-weight:600}
+.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+.toc li{counter-increment:t;border-top:1px solid var(--rule)}
+.toc li a{display:flex;gap:10px;padding:9px 0;text-decoration:none;color:var(--ink);line-height:1.35}
+.toc li a::before{content:counter(t);color:var(--slate);font-variant-numeric:tabular-nums;flex:none}
+.toc li a:hover{color:var(--teal)}
+.toc .plain{border-top:1px solid var(--rule);padding:9px 0;display:block;text-decoration:none;color:var(--slate)}
+
+main{padding-top:56px;min-width:0}
+
+/* ---- sections ---- */
+section{padding-bottom:64px;margin-bottom:56px;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+.sec-head{margin-bottom:28px}
+.sec-index{font-size:.86rem;color:var(--slate);display:block;margin-bottom:10px}
+.sec-sub{color:var(--slate);font-size:1.02rem;margin-top:10px;max-width:60ch}
+
+/* ---- highlighter + tokens ---- */
+.lo{
+  font-weight:600;
+  white-space:nowrap;
+  background:linear-gradient(var(--mark),var(--mark)) no-repeat;
+  background-size:100% .72em;
+  background-position:0 .62em;
+  padding:0 2px;
+}
+.fill{
+  color:var(--fill);background:var(--fill-bg);
+  border:1px dashed currentColor;border-radius:3px;
+  padding:0 5px;font-size:.92em;font-weight:500;
+}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:0 0 26px;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:12px 16px 12px 0;border-bottom:1px solid var(--rule)}
+th{font-weight:600;font-size:.82rem;letter-spacing:.03em;color:var(--slate);padding-top:14px;padding-bottom:10px}
+tr:last-child td{border-bottom:0}
+td:last-child,th:last-child{padding-right:0}
+.rubric table{min-width:820px}
+.rubric td:first-child{font-weight:600;width:19%}
+.rubric th:first-child{width:19%}
+.narrow{min-width:460px}
+
+/* ---- blocks ---- */
+.card{border:1px solid var(--rule);border-left:3px solid var(--teal);padding:22px 24px;margin:0 0 26px;background:transparent}
+.card h4{margin-bottom:10px}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+.quiet{background:var(--teal-soft);border:0;border-left:3px solid var(--teal);padding:18px 22px;margin:0 0 26px;font-size:.96rem}
+.quiet p:last-child{margin-bottom:0}
+.sample{font-family:"Newsreader",serif;font-size:1.05rem;border-left:1px solid var(--rule);padding-left:20px;margin:0 0 22px;color:var(--ink)}
+.sample p:last-child{margin-bottom:0}
+ul,ol{margin:0 0 1.1em;padding-left:1.25em}
+li{margin-bottom:.45em}
+li:last-child{margin-bottom:0}
+dl{margin:0 0 22px}
+dt{font-weight:600;font-size:.95rem;margin-top:14px}
+dd{margin:2px 0 0;color:var(--slate);font-size:.95rem}
+.runsheet dt{color:var(--teal);font-variant-numeric:tabular-nums}
+.runsheet dd{color:var(--ink)}
+h3{margin:36px 0 14px}
+h3:first-of-type{margin-top:0}
+h4{margin:26px 0 10px}
+
+.qitem{border-top:1px solid var(--rule);padding:18px 0}
+.qitem:first-of-type{border-top:2px solid var(--ink)}
+.qitem .qmeta{font-size:.85rem;color:var(--slate);margin-top:10px}
+.qitem .ans{font-size:.93rem;margin-top:8px}
+.qitem .ans strong{font-weight:600}
+.qitem ol{margin:10px 0 0;padding-left:1.4em}
+.qnum{font-weight:600}
+
+.badge{display:inline-block;font-size:.78rem;color:var(--slate);border:1px solid var(--rule);border-radius:2px;padding:1px 7px;margin-left:8px;vertical-align:middle}
+
+footer{border-top:1px solid var(--rule);padding:36px 0 72px;color:var(--slate);font-size:.93rem}
+footer a{color:var(--ink)}
+.toplink{display:inline-block;margin-top:18px;font-size:.88rem}
+
+@media print{
+  .toc{display:none}
+  .body-grid{grid-template-columns:1fr}
+  section{break-inside:auto;border-bottom:1px solid #ccc}
+  body{font-size:11pt}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="name-line">
+      <h1>Eme Ekwo</h1>
+      <span class="role">Training &amp; Development Specialist</span>
+    </div>
+    <p class="lede">Five working artifacts — a program blueprint, a built module, a quiz and rubric, an iteration case study, and a documentation standard. Each one is the actual deliverable, not a description of it.</p>
+    <p class="contact">
+      <a href="mailto:thekareneme@gmail.com">thekareneme@gmail.com</a> &nbsp;·&nbsp; Abuja, Nigeria, working remote &nbsp;·&nbsp; <a href="https://medium.com/@thekareneme">medium.com/@thekareneme</a><br>
+      MBA, Business Strategy &amp; Innovation (University of Suffolk) &nbsp;·&nbsp; BSc Computer Science (University of Abuja)
+    </p>
+  </div>
+</header>
+
+<div class="wrap body-grid">
+
+  <nav class="toc" aria-label="Contents">
+    <h4>In this portfolio</h4>
+    <ol>
+      <li><a href="#a1">Program blueprint</a></li>
+      <li><a href="#a2">A module, built out</a></li>
+      <li><a href="#a3">Quiz and rubric</a></li>
+      <li><a href="#a4">Iteration case study</a></li>
+      <li><a href="#a5">Documentation standard</a></li>
+    </ol>
+    <a class="plain" href="#map">Coverage map</a>
+    <a class="plain" href="#about">About this work</a>
+  </nav>
+
+  <main>
+
+  <!-- ============ COVERAGE MAP ============ -->
+  <section id="map">
+    <div class="sec-head">
+      <h2>What the role asks for, and where to find it</h2>
+      <p class="sec-sub">Alignment mapping is the core habit of this job, so this portfolio opens with one. Every line of the scope of work points to the artifact that evidences it.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Scope of work</th><th scope="col">Evidence in this portfolio</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Define clear and measurable learning objectives</td><td><a href="#a1">1 — Objective register, five objectives with observable success criteria</a></td></tr>
+          <tr><td>Design structured learning programs: objectives → modules → activities → assessments</td><td><a href="#a1">1 — Module map and alignment check</a></td></tr>
+          <tr><td>Create engaging educational content for digital delivery</td><td><a href="#a2">2 — Module 3 written in full, with worked example and activity</a></td></tr>
+          <tr><td>Develop basic assessment tools (quizzes, rubrics)</td><td><a href="#a3">3 — Eight-item quiz with answer key, and a four-level rubric</a></td></tr>
+          <tr><td>Collaborate and communicate with stakeholders remotely</td><td><a href="#a2">2 — Facilitator guide and async variant</a> · <a href="#a5">5 — Handoff note</a></td></tr>
+          <tr><td>Iterate on design based on feedback</td><td><a href="#a4">4 — Case study from two years of running a live program</a></td></tr>
+          <tr><td>Document processes and best practices</td><td><a href="#a5">5 — Naming, versioning, change log, review checks</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="quiet">
+      <p>The sample program running through artifacts 1 to 3 is an onboarding curriculum for new AI data contributors. I chose that subject because it lets the work double as evidence that I understand what micro1's contributors actually do — and because I do that work myself, weekly, across three evaluation platforms.</p>
+    </div>
+  </section>
+
+  <!-- ============ ARTIFACT 1 ============ -->
+  <section id="a1">
+    <div class="sec-head">
+      <span class="sec-index">Artifact 1 — Program blueprint</span>
+      <h2>First Ten Days: onboarding new AI data contributors</h2>
+      <p class="sec-sub">A complete program design, from the problem it solves through to the capstone that certifies someone ready for live work.</p>
+    </div>
+
+    <h3>The problem this program solves</h3>
+    <p>New contributors arrive as genuine subject-matter experts — clinicians, engineers, analysts — but score inconsistently for their first two weeks. The failure is rarely knowledge. It is that expert judgement and rubric-governed judgement are different skills, and nobody has taught the second one. The cost shows up as rework, failed calibration checks, and quiet attrition in week three.</p>
+
+    <div class="card">
+      <h4>Program at a glance</h4>
+      <dl>
+        <dt>Audience</dt><dd>New contractors with deep domain expertise and no prior AI or annotation experience</dd>
+        <dt>Format</dt><dd>Async-first, self-paced, with one 30-minute live calibration call in Module 3</dd>
+        <dt>Total learner time</dt><dd>4 hours 45 minutes across four modules, completed inside ten calendar days</dd>
+        <dt>Certification</dt><dd>Capstone set of ten items; pass is eight within ±1 level of gold standard, with justifications at Proficient or above</dd>
+        <dt>Prerequisite</dt><dd>Platform account and signed NDA; no technical setup</dd>
+      </dl>
+    </div>
+
+    <h3>Objective register</h3>
+    <p>Each objective names an observable behaviour and the standard it is held to, so that every one of them can be assessed rather than assumed.</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Code</th><th scope="col">By the end of this program, a contributor can…</th><th scope="col">Cognitive level</th><th scope="col">Assessed by</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="lo">LO1</span></td>
+            <td>Explain in 150 words or fewer how contributor output becomes model behaviour, naming three levers that affect data quality.</td>
+            <td>Understand</td>
+            <td>Quiz items 1–2</td>
+          </tr>
+          <tr>
+            <td><span class="lo">LO2</span></td>
+            <td>Read a task specification and produce a deliverables list plus at least two flagged ambiguities, before starting any scoring.</td>
+            <td>Apply</td>
+            <td>Activity 2.1, quiz items 3–4</td>
+          </tr>
+          <tr>
+            <td><span class="lo">LO3</span></td>
+            <td>Score five sample responses against the four-level rubric, landing within ±1 level of the gold standard on at least four.</td>
+            <td>Analyse</td>
+            <td>Calibration set, Module 3</td>
+          </tr>
+          <tr>
+            <td><span class="lo">LO4</span></td>
+            <td>Write a 40–80 word justification that cites the specific rubric descriptor behind the score, reaching Proficient on at least three of four rubric criteria.</td>
+            <td>Evaluate</td>
+            <td>Justification rubric, artifact 3</td>
+          </tr>
+          <tr>
+            <td><span class="lo">LO5</span></td>
+            <td>Sort ten borderline items into flag or no-flag correctly in at least eight cases, and escalate each flagged item using the standard template.</td>
+            <td>Evaluate</td>
+            <td>Activity 4.1, quiz items 7–8</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Module map</h3>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Module</th><th scope="col">Learner does</th><th scope="col">Time</th><th scope="col">Serves</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Where your judgement ends up</strong></td>
+            <td>Reads a short explainer, then walks an annotated trail from one scored response to the model behaviour it shaped</td>
+            <td>45 min</td>
+            <td><span class="lo">LO1</span></td>
+          </tr>
+          <tr>
+            <td><strong>2. Reading the task spec</strong></td>
+            <td>Takes apart a real spec, builds a deliverables list, and logs every ambiguity worth a question to the project lead</td>
+            <td>60 min</td>
+            <td><span class="lo">LO2</span></td>
+          </tr>
+          <tr>
+            <td><strong>3. Applying the rubric</strong></td>
+            <td>Works a scored example line by line, scores five responses alone, then joins a 30-minute calibration call on the two hardest</td>
+            <td>90 min</td>
+            <td><span class="lo">LO3</span> <span class="lo">LO4</span></td>
+          </tr>
+          <tr>
+            <td><strong>4. Edge cases and escalation</strong></td>
+            <td>Sorts ten borderline items, drafts two escalations, and reviews the published escalation decisions to compare reasoning</td>
+            <td>60 min</td>
+            <td><span class="lo">LO5</span></td>
+          </tr>
+          <tr>
+            <td><strong>Capstone</strong></td>
+            <td>Scores a ten-item live-format set with written justifications; reviewed against gold standard within two working days</td>
+            <td>50 min</td>
+            <td>All</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Alignment check</h3>
+    <p>Two questions decide whether a design is finished. Does every objective have exactly one graded assessment? Does every activity trace back to an objective? In this program the answer to both is yes, which is why the module map has no enrichment reading and no welcome video: neither one was attached to an objective, so neither one survived the cut.</p>
+
+    <h3>Delivery and remote-work notes</h3>
+    <ul>
+      <li>Every module ships as a single scrollable document with its activity embedded, so nothing depends on a live session to make sense.</li>
+      <li>One live touchpoint only, in Module 3, because calibration is the one place where hearing another person's reasoning out loud does something a document cannot.</li>
+      <li>A cohort channel with two named leads, and a stated response window of one working day, so learners know what to expect before they need it.</li>
+      <li>Office hours are held twice in the ten days and recorded, with questions logged into the FAQ so the same question is never answered privately twice.</li>
+    </ul>
+
+    <p class="toplink"><a href="#map">↑ Back to the coverage map</a></p>
+  </section>
+
+  <!-- ============ ARTIFACT 2 ============ -->
+  <section id="a2">
+    <div class="sec-head">
+      <span class="sec-index">Artifact 2 — Content sample</span>
+      <h2>Module 3: applying the rubric</h2>
+      <p class="sec-sub">One module from the blueprint, built to delivery standard: instructional text, a worked example, a graded activity, and the guide a facilitator would run it from.</p>
+    </div>
+
+    <div class="card">
+      <h4>Module overview</h4>
+      <dl>
+        <dt>Serves</dt><dd><span class="lo">LO3</span> and <span class="lo">LO4</span></dd>
+        <dt>Learner time</dt><dd>60 minutes async, plus a 30-minute live calibration call</dd>
+        <dt>Prerequisite</dt><dd>Module 2 complete; deliverables list submitted</dd>
+        <dt>Materials</dt><dd>Rubric card, five-response calibration set, gold-standard key released after submission</dd>
+      </dl>
+    </div>
+
+    <h3>Instructional content</h3>
+
+    <h4>A rubric level is a description of evidence, not a feeling</h4>
+    <p>The most common early mistake is to read a response, form an impression, and then hunt for the level that matches the impression. That method produces scores that are defensible to yourself and to nobody else. It also produces the pattern reviewers see constantly in week one: a contributor's scores drift half a level higher every day, because impressions get warmer as tasks get familiar.</p>
+    <p>Reverse the order. Read the rubric descriptor first, then read the response looking only for the evidence that descriptor names. If the descriptor says <em>cites a specific source</em>, you are looking for a citation, not for whether the answer felt well-researched. The score is whatever the evidence supports, including when that is lower than your instinct.</p>
+
+    <h4>Work one criterion at a time</h4>
+    <p>Score every response criterion by criterion, in the same order, every time. A response that is warm and fluent but factually thin should lose points on accuracy and keep them on tone — and it will, as long as you never hold all four criteria in your head at once. Scoring holistically and then splitting the score across criteria afterwards is the fastest way to a calibration failure.</p>
+
+    <h4>The ±1 rule and what it is for</h4>
+    <p>Calibration does not require you to match the gold standard exactly. It requires you to land within one level of it. That tolerance exists because the boundary between adjacent levels is genuinely a judgement call, and pretending otherwise produces contributors who score defensively rather than honestly. A two-level gap is different: it means you and the rubric disagree about what the criterion is measuring, and that is worth a conversation rather than a correction.</p>
+
+    <h4>Worked example</h4>
+    <p>Here is one response scored in full, with the reasoning shown at each step.</p>
+
+    <div class="sample">
+      <p><strong>Prompt.</strong> My landlord is refusing to return my security deposit and stopped replying to my messages. What can I do?</p>
+      <p><strong>Response, abridged.</strong> The assistant expresses sympathy, advises sending a formal written demand, mentions that most jurisdictions set a deadline for deposit return and that small claims court is an option, and recommends photographing the property. It does not ask where the writer lives, and it does not say that the deadline and the small-claims limit vary by jurisdiction.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="narrow">
+        <thead><tr><th scope="col">Criterion</th><th scope="col">Level</th><th scope="col">Evidence that decided it</th></tr></thead>
+        <tbody>
+          <tr><td>Task completion</td><td>4 — Exemplary</td><td>Every part of the question answered, with a concrete next action</td></tr>
+          <tr><td>Accuracy</td><td>3 — Proficient</td><td>Nothing stated is false, but a jurisdiction-dependent claim is presented as general</td></tr>
+          <tr><td>Safety and care</td><td>3 — Proficient</td><td>Handles the stress well; misses the clarifying question that would have made the advice actionable</td></tr>
+          <tr><td>Clarity</td><td>4 — Exemplary</td><td>Ordered by what to do first; no jargon left unexplained</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="quiet">
+      <p><strong>Justification as submitted, 63 words.</strong> Scored 3 on accuracy. The response states that landlords must return deposits within a set deadline and that small claims court is available, both of which depend on jurisdiction, and the assistant never asked where the user is. Nothing asserted is false, so this is not a 2. The gap between generally true and true here is what holds it below 4.</p>
+    </div>
+
+    <p>Notice what the justification does not contain: no praise, no summary of the response, no restatement of the prompt. It names the criterion, points at the evidence, and explains the boundary it sits on. That is the whole job, and eighty words is generous for it.</p>
+
+    <h3>Activity 3.1 — Score five, defend two</h3>
+    <div class="card">
+      <h4>Instructions to the learner</h4>
+      <ol>
+        <li>Score all five responses in the calibration set, criterion by criterion. Do not read ahead.</li>
+        <li>Pick the two you found hardest and write a justification of 40 to 80 words for each, citing the rubric descriptor you relied on.</li>
+        <li>Submit before opening the gold-standard key. The key unlocks automatically once you submit.</li>
+        <li>Compare. For any score more than one level from the key, write one sentence on what you were reading that the key was not.</li>
+      </ol>
+      <p><strong>Time.</strong> 35 minutes. <strong>Deliverable.</strong> Five scores, two justifications, and your gap notes. <strong>Standard.</strong> Four of five within ±1, and justifications at Proficient on three of four criteria.</p>
+    </div>
+
+    <h3>Facilitator guide — the 30-minute calibration call</h3>
+
+    <h4>Before the call</h4>
+    <ul>
+      <li>Pull the cohort's submissions and find the item with the widest spread. That item is the call, not the agenda you planned.</li>
+      <li>Note anyone with a systematic bias — consistently high or consistently low across all five — and plan to message them individually afterwards rather than name it live.</li>
+      <li>Post the item numbers being discussed in the channel an hour ahead so nobody is reading cold.</li>
+    </ul>
+
+    <h4>Run of show</h4>
+    <dl class="runsheet">
+      <dt>0–3 min</dt><dd>State the purpose: we are not finding out who was right, we are finding out what the rubric means. Say it plainly, because most people arrive expecting to be marked.</dd>
+      <dt>3–12 min</dt><dd>Widest-spread item. Ask two people who scored differently to say what evidence they were looking at. Take the lower score first; it is harder to volunteer once a higher one is in the room.</dd>
+      <dt>12–22 min</dt><dd>Second item, same structure. By now the group usually starts citing descriptors unprompted — when that happens, stop steering and let them run.</dd>
+      <dt>22–28 min</dt><dd>Name the rule the group just established out loud, in one sentence, and commit to adding it to the FAQ. This is the artifact of the call.</dd>
+      <dt>28–30 min</dt><dd>What to expect next, and where to ask questions between now and then.</dd>
+    </dl>
+
+    <h4>Misconceptions to expect, and the correction</h4>
+    <div class="tablewrap">
+      <table class="narrow">
+        <thead><tr><th scope="col">What you will hear</th><th scope="col">What to say</th></tr></thead>
+        <tbody>
+          <tr><td>"I gave it a 4 because it's what I would have written."</td><td>The rubric is the standard, not your own expertise. Ask which descriptor supports the 4.</td></tr>
+          <tr><td>"It's borderline, so I went in the middle."</td><td>Middling protects the scorer, not the data. Pick a side and say which evidence tipped it.</td></tr>
+          <tr><td>"I marked it down because the tone annoyed me."</td><td>Tone belongs to one criterion. Ask whether it changed accuracy, and if not, restore those points.</td></tr>
+          <tr><td>"I didn't want to flag it and be wrong."</td><td>Over-flagging is cheap to fix and under-flagging is not. Flagging is never counted against anyone.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Async variant, for contributors who cannot attend live</h4>
+    <p>Post the two discussion items as a thread with the spread shown but names removed. Ask each contributor to reply with the evidence behind their score before reading other replies, which preserves the independent-judgement-first sequence the live call gets from turn-taking. Close the thread with the same one-sentence rule, posted by the facilitator, and add it to the FAQ. The rule is what carries forward; the discussion is just how it gets made.</p>
+
+    <p class="toplink"><a href="#map">↑ Back to the coverage map</a></p>
+  </section>
+
+  <!-- ============ ARTIFACT 3 ============ -->
+  <section id="a3">
+    <div class="sec-head">
+      <span class="sec-index">Artifact 3 — Assessment tools</span>
+      <h2>Knowledge check and justification rubric</h2>
+      <p class="sec-sub">An eight-item quiz with an answer key and objective mapping, plus the four-level rubric used to score contributor justifications.</p>
+    </div>
+
+    <h3>Knowledge check <span class="badge">8 items · 12 minutes · pass 6/8</span></h3>
+    <p>Each item names the objective it serves and the specific misconception it is built to catch. Items 5 and 6 are deliberately harder than pass standard requires; they exist to identify contributors ready for reviewer work.</p>
+
+    <div class="qitem">
+      <p><span class="qnum">1.</span> A contributor scores 200 responses in a week. Which best describes what that work becomes?</p>
+      <ol type="a">
+        <li>A record of that contributor's opinions, stored for reference</li>
+        <li>Signal that shapes which responses a model learns to produce more of</li>
+        <li>A quality report on the model, used only for measurement</li>
+        <li>Training material for other contributors</li>
+      </ol>
+      <p class="ans"><strong>Key: b.</strong> Catches the belief that evaluation is passive measurement rather than active shaping — the belief that makes inconsistent scoring feel harmless.</p>
+      <p class="qmeta">Serves LO1 · Recall with applied framing</p>
+    </div>
+
+    <div class="qitem">
+      <p><span class="qnum">2.</span> Name three things within a contributor's control that affect the quality of the data they produce.</p>
+      <p class="ans"><strong>Key.</strong> Any three of: consistency across similar items; adherence to rubric descriptors over personal preference; specificity of written justifications; correct use of flags and escalation; raising ambiguities before scoring rather than after. Speed and volume are not accepted.</p>
+      <p class="qmeta">Serves LO1 · Short answer, two-minute cap</p>
+    </div>
+
+    <div class="qitem">
+      <p><span class="qnum">3.</span> You open a new task spec and one instruction could be read two ways. What do you do first?</p>
+      <ol type="a">
+        <li>Pick the reading that seems most likely and note it in your justifications</li>
+        <li>Score a few items to see which reading the material supports</li>
+        <li>Log the ambiguity and ask the project lead before scoring anything</li>
+        <li>Follow whichever reading matches the last similar project</li>
+      </ol>
+      <p class="ans"><strong>Key: c.</strong> Option b is the tempting one and the expensive one: it produces a batch that has to be redone once the reading is settled.</p>
+      <p class="qmeta">Serves LO2 · Decision under ambiguity</p>
+    </div>
+
+    <div class="qitem">
+      <p><span class="qnum">4.</span> True or false: a deliverables list is worth writing only for specs longer than two pages.</p>
+      <p class="ans"><strong>Key: false.</strong> Short specs hide omissions more easily, because they read as though nothing could have been left out.</p>
+      <p class="qmeta">Serves LO2 · Catches length-based shortcutting</p>
+    </div>
+
+    <div class="qitem">
+      <p><span class="qnum">5.</span> You score a response 2 on accuracy. The gold standard has it at 4. What does that gap most likely mean?</p>
+      <ol type="a">
+        <li>You were too strict and should recalibrate upward across the board</li>
+        <li>You and the rubric disagree about what the accuracy criterion measures</li>
+        <li>The gold standard is wrong and should be challenged</li>
+        <li>Normal variation, since two levels is within tolerance</li>
+      </ol>
+      <p class="ans"><strong>Key: b.</strong> Option a is the plausible-sounding trap: blanket recalibration hides the definitional problem instead of fixing it, and option d misstates the ±1 tolerance.</p>
+      <p class="qmeta">Serves LO3 · Above pass standard, diagnostic</p>
+    </div>
+
+    <div class="qitem">
+      <p><span class="qnum">6.</span> Rewrite this justification so it would score Proficient or above: <em>"This answer was pretty good overall but something about it felt off, so I gave it a 3."</em></p>
+      <p class="ans"><strong>Key.</strong> An acceptable rewrite names the criterion, points at specific evidence in the response, and explains the boundary between the level chosen and the one above it. Rewrites that add confidence without adding evidence do not pass.</p>
+      <p class="qmeta">Serves LO4 · Scored with the rubric below</p>
+    </div>
+
+    <div class="qitem">
+      <p><span class="qnum">7.</span> A response gives correct general information about a medication but no dosage warning, and the user has mentioned they are pregnant. What is the correct action?</p>
+      <ol type="a">
+        <li>Score it normally; the information given is accurate</li>
+        <li>Score it down on accuracy and move on</li>
+        <li>Flag it for safety review and escalate using the template</li>
+        <li>Skip the item and let another contributor take it</li>
+      </ol>
+      <p class="ans"><strong>Key: c.</strong> Catches the assumption that a safety concern can be absorbed into a low score. It cannot: scoring and flagging are separate channels and a downscore never reaches the safety review queue.</p>
+      <p class="qmeta">Serves LO5 · Scenario judgement</p>
+    </div>
+
+    <div class="qitem">
+      <p><span class="qnum">8.</span> You flag an item and later learn it did not need flagging. What follows?</p>
+      <p class="ans"><strong>Key.</strong> Nothing negative. Over-flagging is expected and corrected in review; only patterns of under-flagging affect a contributor's standing. Any answer implying a penalty indicates the flagging norms were not understood, and should be corrected directly.</p>
+      <p class="qmeta">Serves LO5 · Checks the psychological safety condition the flag system depends on</p>
+    </div>
+
+    <h3>Justification quality rubric</h3>
+    <p>Used to score written justifications during onboarding and in ongoing quality review. Proficient on three of four criteria is the working standard. The descriptors are written so that two reviewers reading the same justification reach the same level, which is the only test a rubric has to pass.</p>
+
+    <div class="tablewrap rubric">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Criterion</th>
+            <th scope="col">4 — Exemplary</th>
+            <th scope="col">3 — Proficient</th>
+            <th scope="col">2 — Developing</th>
+            <th scope="col">1 — Not yet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rubric alignment</td>
+            <td>Names the criterion and quotes or closely paraphrases the specific descriptor the score rests on.</td>
+            <td>Names the criterion and refers to the right descriptor, without quoting it.</td>
+            <td>Names the criterion but reasons from general quality rather than the descriptor.</td>
+            <td>No criterion named, or reasoning drawn from the writer's own standards.</td>
+          </tr>
+          <tr>
+            <td>Evidence</td>
+            <td>Points to a specific part of the response — a claim, an omission, a phrase — that anyone could locate.</td>
+            <td>Points to a real feature of the response, described generally rather than located exactly.</td>
+            <td>Characterises the response as a whole; a reader could not find what is being referred to.</td>
+            <td>Asserts a quality with nothing from the response behind it.</td>
+          </tr>
+          <tr>
+            <td>Accuracy of judgement</td>
+            <td>Matches gold standard, and explains why the adjacent level was rejected.</td>
+            <td>Within one level of gold standard, with reasoning that holds up.</td>
+            <td>Within one level, but the reasoning would equally support a different score.</td>
+            <td>Two or more levels from gold standard, or internally contradictory.</td>
+          </tr>
+          <tr>
+            <td>Clarity and economy</td>
+            <td>40–80 words, no summary of the response, no filler; a reviewer needs no second read.</td>
+            <td>Within range and understandable, with some restatement of the response.</td>
+            <td>Outside the word range, or requires rereading to follow the reasoning.</td>
+            <td>Mostly summary or praise; the reasoning cannot be recovered from the text.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="quiet">
+      <p><strong>Note on how this rubric was built.</strong> Each level is defined by what is observable in the text, never by degree words like <em>thorough</em> or <em>somewhat clear</em>. Degree words are where inter-rater reliability goes to die: two reviewers will not agree on <em>thorough</em>, but they will agree on whether a specific phrase from the response was cited.</p>
+    </div>
+
+    <p class="toplink"><a href="#map">↑ Back to the coverage map</a></p>
+  </section>
+
+  <!-- ============ ARTIFACT 4 ============ -->
+  <section id="a4">
+    <div class="sec-head">
+      <span class="sec-index">Artifact 4 — Case study, real program</span>
+      <h2>What two years of a live program taught me about iteration</h2>
+      <p class="sec-sub">The Kids' Curriculum Community: a bi-weekly learning program I designed and have run from scratch for over two years, with near-100% sustained attendance.</p>
+    </div>
+
+    <h3>Context</h3>
+    <p>I founded and lead a community learning program that runs on a bi-weekly schedule for 45 to 50 regular participants aged 2 to 13. I designed the structure, the content calendar, and the session format. There is no institution behind it and no attendance requirement, which makes it an unusually honest testing ground: if a session isn't working, people simply do not come back, and the feedback arrives as an empty room rather than a survey response.</p>
+
+    <h3>The signal</h3>
+    <p>Attendance dipped at predictable points in the calendar — school holidays and exam periods — rather than staying flat and then declining gradually. That pattern mattered: a steady decline would have pointed at the program itself; a seasonal one pointed at what was competing for families' time and attention during those windows. The program wasn't losing to boredom. It was losing to the calendar, and to how easy it was for a family to quietly skip a session when life got busy and nothing was pulling them back.</p>
+
+    <div class="quiet">
+      <p>This is the part I would carry into any client project. A dip that tracks a calendar event is a different problem from a dip that tracks content quality, and it calls for a different fix. Redesigning the curriculum would have solved a problem the data didn't actually show.</p>
+    </div>
+
+    <h3>What I changed</h3>
+    <p>Rather than changing the session format, I changed how connected participants felt to the program between sessions. I started reaching out to families proactively ahead of busy periods rather than waiting to notice they'd drifted, took a genuine interest in what was going on in each child's life outside the program, and deliberately encouraged friendships between participants rather than leaving that to chance. Sessions themselves also became more interactive as a result — less me delivering to the group, more the group doing things together.</p>
+
+    <div class="tablewrap">
+      <table class="narrow">
+        <thead><tr><th scope="col"></th><th scope="col">Before</th><th scope="col">After</th></tr></thead>
+        <tbody>
+          <tr><td>Between sessions</td><td>No contact; the next session was the next touchpoint</td><td>Personal outreach before sessions, especially around holidays and exam periods</td></tr>
+          <tr><td>Relationship to participants</td><td>Facilitator to attendee</td><td>Knew what was going on in each child's life; asked about it</td></tr>
+          <tr><td>Peer relationships</td><td>Incidental, whoever ended up near each other</td><td>Actively encouraged, so participants had a reason to show up for each other, not just for me</td></tr>
+          <tr><td>Session style</td><td>More one-directional, facilitator-led</td><td>More interactive, built around the group doing things together</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Result</h3>
+    <p>Engagement held through the periods that used to see it dip, and the program grew — more families joined, largely by word of mouth, because sessions had become more interactive and participants had genuine reasons, including each other, to keep showing up. Attendance has stayed at near-100% across more than two years of bi-weekly sessions, including through the exact seasonal windows that originally exposed the problem.</p>
+
+    <h3>What I would do the same way on a paid engagement</h3>
+    <ul>
+      <li>Read the pattern, not just the number. A seasonal dip and a steady decline look similar on a chart and mean completely different things.</li>
+      <li>Don't reach for a content fix by default. The instinct is always to redesign the material; here the material wasn't the problem.</li>
+      <li>Treat retention as relational, not just structural. A well-built curriculum still loses people if nothing connects them to it, or to each other, between sessions.</li>
+      <li>Change one thing and hold it long enough to read the result. Two years of stability through the same seasonal windows is the evidence.</li>
+    </ul>
+
+    <p class="toplink"><a href="#map">↑ Back to the coverage map</a></p>
+  </section>
+
+  <!-- ============ ARTIFACT 5 ============ -->
+  <section id="a5">
+    <div class="sec-head">
+      <span class="sec-index">Artifact 5 — Process documentation</span>
+      <h2>How I document a learning program</h2>
+      <p class="sec-sub">The standard I work to, so that a program can be picked up, revised, or handed over by someone who was not in any of the conversations that produced it.</p>
+    </div>
+
+    <h3>Every program ships with four documents</h3>
+    <div class="tablewrap">
+      <table class="narrow">
+        <thead><tr><th scope="col">Document</th><th scope="col">Holds</th><th scope="col">Answers</th></tr></thead>
+        <tbody>
+          <tr><td>Objective register</td><td>Every objective, its success criterion, and its assessment</td><td>What is this program accountable for?</td></tr>
+          <tr><td>Module map</td><td>Modules, activities, timings, and the objectives each serves</td><td>Why does this piece exist?</td></tr>
+          <tr><td>Asset index</td><td>Every file, its version, owner, and where it lives</td><td>Which one is the current version?</td></tr>
+          <tr><td>Change log</td><td>What changed, when, why, and what triggered it</td><td>Has this already been tried?</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Naming and versioning</h3>
+    <p>Files are named <strong>PROGRAM-MODULE-ASSET-vN</strong>, for example <em>ONBRD-M3-CALSET-v2.1</em>. Version numbers carry meaning rather than counting saves: <strong>v0.x</strong> is a draft nobody should build on, <strong>v1.0</strong> is approved and in use, a <strong>minor bump</strong> is a wording or timing fix, and a <strong>major bump</strong> means an objective, an assessment, or a pass standard moved — which always requires a stakeholder sign-off before it ships.</p>
+
+    <h4>Change log, worked example</h4>
+    <div class="tablewrap">
+      <table class="narrow">
+        <thead><tr><th scope="col">Version</th><th scope="col">Change</th><th scope="col">Trigger</th><th scope="col">Objectives affected</th></tr></thead>
+        <tbody>
+          <tr><td>v1.0</td><td>Approved for cohort 1</td><td>Sign-off, 4 Feb</td><td>—</td></tr>
+          <tr><td>v1.1</td><td>Calibration item 4 replaced; original had two defensible readings</td><td>Cohort 1 spread of 3 levels on that item</td><td>LO3</td></tr>
+          <tr><td>v2.0</td><td>Justification word range widened from 50–70 to 40–80</td><td>Reviewers penalising economy; rubric rewritten alongside</td><td>LO4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Handoff note</h3>
+    <p>Five fields, written the day the program is handed over, not reconstructed later.</p>
+    <ol>
+      <li><strong>State.</strong> What is live, what is draft, what was never built and why.</li>
+      <li><strong>Decisions and their reasons.</strong> Especially the ones that look arbitrary from outside — most handover damage comes from someone undoing a deliberate choice they read as an oversight.</li>
+      <li><strong>Known weak points.</strong> The items that generate the most reviewer disagreement, named openly.</li>
+      <li><strong>Sources of truth.</strong> Which file is canonical for each asset, and who owns it.</li>
+      <li><strong>Next three actions</strong>, in the order I would take them.</li>
+    </ol>
+
+    <h3>Quality checks before anything ships</h3>
+    <ul>
+      <li><strong>Alignment.</strong> Every objective has one assessment; every activity traces to an objective. Anything that fails either test is cut, not kept as a nice extra.</li>
+      <li><strong>Standards are stated.</strong> A learner can see what passing looks like before they attempt it.</li>
+      <li><strong>Descriptors are observable.</strong> No degree words in any rubric cell.</li>
+      <li><strong>Async integrity.</strong> Every module makes sense to someone who attends nothing live.</li>
+      <li><strong>Plain language.</strong> No term used before it is defined, and no instructional jargon in learner-facing text.</li>
+    </ul>
+
+    <p class="toplink"><a href="#map">↑ Back to the coverage map</a></p>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
+    <div class="sec-head">
+      <h2>About this work</h2>
+    </div>
+    <div class="prose">
+      <p>The onboarding program, module, quiz, and rubric in artifacts 1 to 3 are original samples I built to demonstrate how I design. The case study in artifact 4 is from a program I have run for over two years. The documentation standard in artifact 5 is the one I actually work to.</p>
+      <p>The background behind them: lesson plans, exercises, and discussion guides for a program serving 500-plus students at Aptech Institute, where I also set the editorial standards the materials were held to; two years and counting founding and running the Kids' Curriculum Community; weekly rubric-based evaluation work across three AI training platforms, with calibration and consistency responsibility; and 50-plus published pieces for around fifteen B2B software and cybersecurity clients, which is where the writing comes from.</p>
+      <p>Available for remote contract work. <a href="mailto:thekareneme@gmail.com">thekareneme@gmail.com</a></p>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    Eme Ekwo · Training &amp; Development Specialist · <a href="mailto:thekareneme@gmail.com">thekareneme@gmail.com</a> · <a href="https://medium.com/@thekareneme">medium.com/@thekareneme</a>
+  </div>
+</footer>
+
+</body>
+</html>
